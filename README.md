@@ -6,8 +6,6 @@ Welcome to our Food Ordering Web App! This application allows users to browse a 
 
 ## Table of Contents
 - [Features](#features)
-- [Demo](#demo)
-- [Installation](#installation)
 - [Usage](#usage)
 - [Technologies Used](#technologies-used)
 - [Contributing](#contributing)
@@ -21,10 +19,27 @@ Welcome to our Food Ordering Web App! This application allows users to browse a 
 - **Payment Integration**: Secure payment processing for orders.
 - **Admin Panel**: Admins can manage menu items, orders, and user accounts.
 
-## Demo
-Check out our [live demo](#) to see the app in action!
+## Usage
+- **Start the server.
+- **npm start
+- Open your web browser and navigate to http://localhost:3000.
 
-## Installation
-1. Clone the repository.
-   ```bash
-   git clone https://github.com/your-username/food-ordering-app.git
+  ## Technologies Used
+- **Frontend**: HTML, CSS, JavaScript, Angular.js
+- **Backend**: Springboot REST API
+- **Database**: MongoDB, MySQL
+- **Authentication**: JSON Web Tokens (JWT)
+- **Payment Integration**: RazorPay
+
+## Contributing
+We welcome contributions from the community! To contribute to this project, please follow these steps:
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature/awesome-feature`).
+3. Make your changes.
+4. Commit your changes (`git commit -am 'Add awesome feature'`).
+5. Push to the branch (`git push origin feature/awesome-feature`).
+6. Create a new Pull Request.
+
+## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
