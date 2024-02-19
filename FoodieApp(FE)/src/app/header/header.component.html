@@ -1,0 +1,97 @@
+<header>
+  <div id="main" style="margin-top: -15px; display: flex; align-items: center;" >
+    <div id="logo">
+      <img (click)="redirectToLandingPage()" src="../../assets/Logo.png" height="130px" width="160px" alt="">
+    </div>
+  
+    
+          <div id="mid-div" style="display: flex;margin:2px solid gray;">
+    
+    
+          <div (click)="onFindMeClick()" id="city-selector" class="search-box1">
+            <mat-icon style="color:rgb(253, 109, 66);border:none">location_on</mat-icon>
+            <br />
+            <div *ngIf="!locationName" style="color: gray; font-size: 15px; margin-left: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+              Enable your location
+            </div>
+            <div *ngIf="locationName" style="color: rgb(107, 106, 106); font-size: 15px; margin-left: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+              {{ locationName }}
+            </div>
+          </div>
+        
+          <p *ngIf="showSearch" style="margin-top:10px;margin-left: 5px; font-size:25px;font-weight:light;color:rgb(146, 146, 146)">|</p>
+          
+          <div class="search-box2" style="margin: 0" *ngIf="showSearch">
+              <mat-icon style="color:rgb(87, 73, 71)">search</mat-icon>
+              
+              <input style="margin-left:10px;width:84%" type="text" placeholder="Search" [(ngModel)]="searchText" (input)="onSearchInputChange()" appSuperPlaceholder>
+          </div>
+    
+        </div>
+    
+        <div id="right-div" style="display: flex; align-items: center; margin-left: auto;">
+
+          <div class="ic" style="margin-right: 15px;display:flex;flex-direction:column;text-align:center;align-items:center;">
+            <mat-icon style="color:black;" routerLink="/home">home</mat-icon>
+            <span routerLink="/home" style="margin-left: 5px;font-family:darker grotesque;font-size:18px;font-weight:bold;color:black;">Home</span>
+        </div>
+
+          <div class="ic" style="margin-right: 15px;display:flex;flex-direction:column;text-align:center;align-items:center;" *ngIf="authService.isAuthenticated() && !isAdmin()">
+            <mat-icon style="color:orangered" (click)="onFavoriteClick()">favorites</mat-icon>
+            <span (click)="onFavoriteClick()" style="margin-left: 5px;font-family:darker grotesque;font-size:18px;font-weight:bold;color:orangered">Favorite</span>
+        </div>
+            
+          <div class="ic" style="margin-right: 15px;display:flex;flex-direction:column;text-align:center;align-items:center;"*ngIf="!authService.isAuthenticated()">
+            <mat-icon routerLink="/signup" style="color:rgb(121, 93, 22)" >person</mat-icon>
+            <!-- <mat-icon>history</mat-icon> -->
+            <span style="margin-left: 5px;font-family:darker grotesque;font-size:18px;font-weight:bold;color:rgb(121, 93, 22)" routerLink="/signup">Signup</span>
+        </div>
+
+        <!-- <div class="ic" style="margin-right: 7px;display:flex;flex-direction:column;text-align:center;align-items:center;" *ngIf="authService.isAuthenticated() && !isAdmin()">
+          <mat-icon routerLink="/user-detail" style="color:rgb(39, 92, 39)" >person_pin</mat-icon>
+         
+          <span style="margin-left: 5px;font-family:darker grotesque;font-size:18px;font-weight:bold;color:rgb(39, 92, 39)" routerLink="/user-detail">Profile</span>
+      </div> -->
+      <div class="ic" style="margin-right: 7px;display:flex;flex-direction:column;text-align:center;align-items:center;" *ngIf="authService.isAuthenticated() && !isAdmin()">
+        <!-- <mat-icon routerLink="/user-detail" style="color:rgb(39, 92, 39)" >person_pin</mat-icon> -->
+        <img routerLink="/user-detail" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover;" [src]="getImageSrc()" alt="Profile Image" class="img-fluid rounded">
+        <!-- <mat-icon>history</mat-icon> -->
+        <span style="margin-left: 5px;font-family:darker grotesque;font-size:18px;font-weight:bold;color:rgb(39, 92, 39)" routerLink="/user-detail">Profile</span>
+    </div>
+        <!-- <div style="margin-right: 15px;display:flex;flex-direction:column;text-align:center;align-items:center;"*ngIf="authService.isAuthenticated()">
+          <mat-icon>person</mat-icon>
+          <span style="margin-left: 5px;">Welcome <p>{{getUserName()}}</p> </span>
+      </div> -->
+        <div class="ic" style="margin-right: 15px;display:flex;flex-direction:column;text-align:center;align-items:center;"*ngIf="!authService.isAuthenticated()">
+            <mat-icon routerLink="/login" style="color:rgb(120, 221, 120)">lock</mat-icon>
+            <span style="margin-left: 5px;font-family:darker grotesque;font-size:18px;font-weight:bold;color:rgb(120, 221, 120)" routerLink="/login">Login</span>
+        </div>
+      
+        <div class="ic" style="margin-right: 15px; display: flex; flex-direction: column; text-align: center; align-items: center;" *ngIf="authService.isAuthenticated() && !isAdmin()">
+          <mat-icon routerLink="/cart" style="color: rgb(19, 19, 99)">shopping_cart</mat-icon>
+          <span style="margin-left: 5px; font-family: darker grotesque; font-size: 18px; font-weight: bold" routerLink="/cart">
+            {{userDetails?.name }}'s Cart
+            <mat-badge [matBadge]="cartCount" matBadgeColor="accent"></mat-badge>
+            
+          </span>
+        </div>
+        
+        
+
+        <div *ngIf="isAdmin()" class="ic" style="margin-right: 15px;display:flex;flex-direction:column;text-align:center;align-items:center;">
+          <mat-icon style="color:black;" (click)="goToOrders()">receipt</mat-icon>
+          <span (click)="goToOrders()" style="margin-left: 5px;font-family:darker grotesque;font-size:18px;font-weight:bold;color:black;">Orders</span>
+       </div>
+
+        <!-- <button class="login" routerLink="/login" *ngIf="!authService.isAuthenticated()" ><mat-icon>login</mat-icon></button> -->
+        <button class="logout ic" (click)="logout()" *ngIf="authService.isAuthenticated()" style="display:flex;flex-direction:column;text-align:center;align-items:center;">
+          <mat-icon style="color: rgb(107, 24, 107);">logout</mat-icon>
+          <span style="color: rgb(107, 24, 107);margin-left: 5px; font-family: darker grotesque; font-size: 18px; font-weight: bold; color: black;">Logout</span>
+        </button>
+        </div>
+    
+    </div>
+    </header>
+    <div style="height:11%">
+
+    </div>

@@ -1,0 +1,81 @@
+<div id="displayer" style="width: 82%; margin: 0 auto;margin-top:10px; margin-bottom:30px;">
+    <div class="heading" style="font-family: 'Darker Grotesque', sans-serif; margin-left: 10px; font-size: 27px; font-weight: bolder; line-height: 40px; flex-shrink: 0;">Whats's on your mind?</div>
+    <div class="card-container" style="width: 100%;display: inline-block;">
+        <div class="images" *ngFor="let img of images" style="width: 150px; height: 170px; margin-right: 5px;">
+            <img  [src]="img" alt="Image" style="width: 100%; height: 100%;">
+        </div>
+
+        
+    </div>
+
+    <div class="offers" style="font-family: 'Darker Grotesque', sans-serif; margin-left: 10px; font-size: 27px; font-weight: bolder; line-height: 40px; flex-shrink: 0;">Top Brands for you</div>
+    <div class="images" *ngFor="let img of brandimages"  style="width: 140px; height: 170px; margin-right: 35px;margin-top: 15px;border-radius:50%">
+        <img [src]="img" style="width: 100%;border-radius:50%; height: 100%; background-color:rgb(255, 255, 255)">
+    </div>
+
+
+    <div style="font-family: 'Darker Grotesque', sans-serif; font-size: 24px; margin-top: 10px; display: flex; align-items: center;">
+        <label for="state" style="margin-right: 10px;font-size:25px;font-weight:bold">Select State:</label>
+        <select id="state" [(ngModel)]="selectedState" (change)="onStateChange()" style="font-size:18px;padding: 4px;border-bottom:1px solid black; color:rgb(0, 0, 0);border-radius: 10px;background-color:rgb(237, 227, 252)">
+          <option *ngFor="let state of states" [ngValue]="state">{{ state }}</option>
+        </select>
+      
+        <label for="city" style="margin-left: 20px; margin-right: 10px;font-size:25px;font-weight:bold">Select City:</label>
+        <select  id="city" [(ngModel)]="selectedCity" (change)="fetchRestaurants()" style="font-size:18px;padding: 4px;border-bottom:1px solid black; border-radius: 10px;background-color:rgb(237, 227, 252)">
+          <option *ngFor="let city of cities" [ngValue]="city">{{ city }}</option>
+        </select>
+      
+        <div style="font-family: 'Darker Grotesque', sans-serif; font-size:25px;font-weight:bold; margin-top: 5px; display: flex; align-items: center;margin-left:18px">
+            <label for="sort " style=" margin-right: 10px;font-size:25px;font-weight:bold">Sort By:</label>
+            <select style="font-size:18px;padding: 4px;border-bottom:1px solid black; border-radius: 10px;background-color:rgb(237, 227, 252)" id="sort" [(ngModel)]="selectedSort" (change)="sortRestaurants()">
+              <option value="rating">Rating</option>
+              <option value="cuisine">Cuisine</option>
+          
+            </select>
+          
+            <div *ngIf="selectedSort === 'cuisine'">
+              <label for="cuisineFilter" style="margin-left: 20px;">Select Cuisine:</label>
+              <select style="font-size:18px;padding: 4px;border-bottom:1px solid black; border-radius: 10px;background-color:rgb(237, 227, 252);margin-left:10px;margin-top:5px "id="cuisineFilter" [(ngModel)]="selectedCuisine" (change)="filterRestaurantsByCuisine()">
+                <option value="" selected>All Cuisines</option>
+                <option *ngFor="let cuisine of allCuisines" [ngValue]="cuisine">{{ cuisine }}</option>
+              </select>
+            </div>
+          
+            <label *ngIf="selectedSort === 'rating'" for="sortOrder" style="margin-left: 20px;">Sort Order:</label>
+            <select style="font-size:18px;padding: 4px;border-bottom:1px solid black; border-radius: 10px;background-color:rgb(237, 227, 252);margin-left:10px" *ngIf="selectedSort === 'rating'" id="sortOrder" [(ngModel)]="sortOrder" (change)="sortRestaurants()">
+              <option value="desc">High to Low</option>
+              <option value="asc">Low to High</option>
+            </select>
+          </div>
+          
+          
+      </div>
+    
+  <div style="font-family: 'Darker Grotesque', sans-serif;font-size:30px; margin-top:20px">
+    <p style="font-weight:bold">Delivery Restaurants in
+      <span style="font-weight:bolder;font-size:34px;">{{ selectedState }}{{ selectedCity ? ', ' + selectedCity : '' }}</span>
+    </p>
+  </div>
+  
+    <div *ngFor="let restaurant of filteredRestaurants" class="restaurant-card" (click)="navigateToRestaurantDetails(restaurant._id)">
+      <div class="restaurant-photo" style="position: relative; padding: 10px;">
+          <div style="position: relative;">
+              <img src="{{ restaurant.images }}" style="border-radius: 15px" alt="Restaurant Photo">
+    
+              <button mat-fab class="favorite-button" matTooltip="Add to Favorites" (click)="addToFavorites($event,restaurant._id)" matTooltip="Add to Favorites" style="position: absolute; bottom: 15px; right: 10px; z-index: 999; background-color: rgb(224, 221, 17); height: 24px; width: 24px;">
+                  <mat-icon style="color: black; font-size: 16px; margin-top:8px;">favorite</mat-icon>
+              </button>
+          </div>
+    
+          <h2 style="margin-top: 10px; font-family: 'Darker Grotesque', sans-serif; font-weight: bold; font-size: 24px; font-weight: bold; margin-top: -5px; margin-left: 10px;">{{ restaurant.name }}</h2>
+          <p style="margin-top: -15px; margin-left: 7px; color: rgb(0, 0, 0); font-family: 'Darker Grotesque'; font-size: 20px; font-weight: 500px;">{{ restaurant.cuisine.join(', ') }}</p>
+          <!-- <p style="margin-top: -15px; margin-left: 7px; color: rgb(0, 0, 0); font-family: 'Darker Grotesque'; font-size: 20px; font-weight: bold; margin-left: -1px; margin-top: -5px;">⭐{{ restaurant.rating }}</p> -->
+          <p style="margin-top: -15px; margin-left: 7px; font-family: 'Darker Grotesque'; font-size: 20px; font-weight: bold; margin-left: 2px; margin-top: -9px;">
+            <mat-icon [ngStyle]="{'color': getRatingColor(restaurant.rating)}" style="vertical-align: middle;margin-left:3px;font-size:18px">star</mat-icon>
+            <span style="margin-top:-15px">{{ restaurant.rating }}</span>
+          </p>
+      </div>
+    </div>
+    </div>
+
+    <app-footer></app-footer>

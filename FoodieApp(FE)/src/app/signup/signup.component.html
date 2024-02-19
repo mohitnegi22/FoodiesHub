@@ -1,0 +1,136 @@
+<div class="outerdiv" style="height:100%;background-image:url('../../assets/loginnn.jpg');background-repeat:no-repeat;background-size:cover">
+  <button mat-icon-button style="position: fixed; top: 10px; right: 10px; color: white; background-color: #cfebe2;color:black;border:1px solid black" routerLink="/home" matTooltip="Back to Home">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <div style="height:85px">
+    <h1  style="font-family:'Bitter', serif;padding-top:20px;margin-left:31%;color:rgb(245, 245, 245);font-size:30px;font-weight:bolder;letter-spacing:1px;">
+      SignUp To <span style="color:white;font-size:35px">FoodiesHub❤️</span></h1>
+  </div>
+<div class="container">
+  <div style="margin-top:30px" class="background-image"></div>   
+  <div class="form-container" style="background-color:rgba(255, 255, 255, 0.904);border-radius:18px">
+    
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+      <div class="form-field">
+        <label for="emailId">Email:</label>
+        <input type="email" id="emailId" formControlName="emailId" />
+        <div class="error" *ngIf="signupForm.get('emailId').hasError('required') && signupForm.get('emailId')?.touched">Email is required</div>
+        <div class="error" *ngIf="signupForm.get('emailId')?.hasError('invalidEmail')">Enter a valid email</div>
+        <div class="error" *ngIf="signupForm.get('emailId')?.hasError('emailExists')">Email already exists</div>
+      </div>
+
+      
+      <div class="row">
+        <div class="form-field">
+          <label for="name">Name:</label>
+          <input type="text" id="name" formControlName="name" />
+          <div class="error" *ngIf="name?.touched && name?.errors?.['required']">Name is required</div>
+          <div class="error" *ngIf="name?.errors?.['minlength']">Name Minimum Length is {{ name?.errors?.['minlength']?.requiredLength }}</div>
+        </div>
+
+        
+        <div class="form-field">
+          <label for="password">Password:</label>
+          <div class="password-container">
+          <input type="password" id="password" formControlName="password" [type]="hidePassword ? 'password' : 'text'"/>
+          <span style="margin-left:0" class="password-toggle" (click)="togglePasswordVisibility()"><i style="margin-left:90%;margin-top:5px;color:black"class="fa-solid fa-eye"></i></span>
+          </div>
+          <div class="error" *ngIf="password?.touched && password?.errors?.['required']">Password is required</div>
+          <div class="error" *ngIf="password?.errors?.['minlength']">Password should have a minimum of {{ password?.errors?.['minlength']?.requiredLength }} letters</div>
+          <div class="error" *ngIf="password?.errors?.['pattern']">Password should have at least a symbol, upper and lowercase letters, and a number</div>
+        </div>
+
+        <div class="form-field">
+          <label for="confirmPassword">Confirm Password:</label>
+          <div class="password-container">
+          <input type="password" id="confirmPassword" formControlName="confirmPassword" [type]="hidePassword ? 'password' : 'text'"/>
+          <span style="margin-left:0" class="password-toggle" (click)="togglePasswordVisibility()"><i style="margin-left:90%;margin-top:5px;color:black"class="fa-solid fa-eye"></i></span>
+          </div>
+          <div class="error" *ngIf="confirmPassword?.touched && confirmPassword?.errors?.['required']">Confirm Password is required</div>
+          <div class="error" *ngIf="confirmPassword?.errors?.['passwordMismatch']">Password and Confirm Password should match</div>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="form-field">
+          <label class="form-field" for="state">State:</label>
+          <select id="state" formControlName="state" class="state-dropdown">
+            <option value="" disabled selected>Select State</option>
+            <option value="Andhra Pradesh">Andhra Pradesh</option>
+            <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+            <option value="Assam">Assam</option>
+            <option value="Bihar">Bihar</option>
+            <option value="Chhattisgarh">Chhattisgarh</option>
+            <option value="Goa">Goa</option>
+            <option value="Gujarat">Gujarat</option>
+            <option value="Haryana">Haryana</option>
+            <option value="Himachal Pradesh">Himachal Pradesh</option>
+            <option value="Jharkhand">Jharkhand</option>
+            <option value="Karnataka">Karnataka</option>
+            <option value="Kerala">Kerala</option>
+            <option value="Madhya Pradesh">Madhya Pradesh</option>
+            <option value="Maharashtra">Maharashtra</option>
+            <option value="Manipur">Manipur</option>
+            <option value="Meghalaya">Meghalaya</option>
+            <option value="Mizoram">Mizoram</option>
+            <option value="Nagaland">Nagaland</option>
+            <option value="Odisha">Odisha</option>
+            <option value="Punjab">Punjab</option>
+            <option value="Rajasthan">Rajasthan</option>
+            <option value="Sikkim">Sikkim</option>
+            <option value="Tamil Nadu">Tamil Nadu</option>
+            <option value="Telangana">Telangana</option>
+            <option value="Tripura">Tripura</option>
+            <option value="Uttar Pradesh">Uttar Pradesh</option>
+            <option value="Uttarakhand">Uttarakhand</option>
+            <option value="West Bengal">West Bengal</option>
+          </select>
+          <div class="error" *ngIf="state?.touched && state?.errors?.['required']">State is required.</div>
+        </div>
+
+         <div class="form-field" >
+          <label for="city">City:</label>
+          <input type="text" id="city" formControlName="city" />
+          <div class="error" *ngIf="city?.touched && city?.errors?.['required']">City is required</div>
+          <div class="error" *ngIf="city?.errors?.['maxlength']">City Maximum Length is {{ city?.errors?.['maxlength']?.requiredLength }}</div>
+        </div>
+
+        <div class="form-field">
+          <label for="zipCode">Zip Code:</label>
+          <input type="text" id="zipCode" formControlName="zipCode" />
+          <div class="error" *ngIf="zipCode?.touched && zipCode?.errors?.['required']">Zip Code is required</div>
+          <div class="error" *ngIf="zipCode?.errors?.['pattern']">Zip code should be 5-digit or 6-digit number​</div>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="fullAddress">Full Address:</label>
+        <textarea id="fullAddress" formControlName="fullAddress"></textarea>
+        <div class="error" *ngIf="fullAddress?.touched && fullAddress?.errors?.['required']">Full Address is required</div>
+        <div class="error" *ngIf="fullAddress?.errors?.['maxlength']">Full Address Maximum Length is {{ fullAddress?.errors?.['maxlength']?.requiredLength }}</div>
+      </div>
+
+      <div class="form-field">
+        <label for="mobileNumber">Mobile Number:</label>
+        <input type="text" id="mobileNumber" formControlName="mobileNumber" />
+        <div class="error" *ngIf="mobileNumber?.touched && mobileNumber?.errors?.['required']">Mobile number is required</div>
+        <div class="error" *ngIf="mobileNumber?.errors?.['pattern']">Valid phone number contains 10 digits starting with 7/8/9​</div>
+      </div>
+
+      <div class="form-field">
+        <label for="profileImage">Profile Image:</label>
+        <input type="file" id="profileImage" (change)="onFileSelected($event)" accept="image/*" style="display: none;" />
+        <button type="button" mat-raised-button color="primary" (click)="openFilePicker()" >Upload Image</button>
+      </div>
+
+      <button color="accent" class="reset" mat-raised-button type="reset">Reset</button>
+      <button type="submit" [disabled]="signupForm.invalid" class="button">Sign Up</button>
+      <p class="acc" routerLink="/login" style="margin-top:12px;font-family:darker grotesque;font-size:17px;font-weight:bold">Already have account?? </p>
+    </form>
+  </div>
+        
+  <div class="color-container" style="border-radius: 18px; margin-left: 2px;text-align:center;">
+  </div>
+</div>
+</div>

@@ -1,0 +1,132 @@
+<div class="background-image">
+    <div class="content">
+      <div class="header">
+        <!-- <h1 style="font-family:Georgia, 'Times New Roman', Times, serif;font-size:45px;font-weight:bold;" >FoodiesHub</h1> -->
+        <div>
+        <img src="assets/landing.png"  width="27%" height="27%" style="margin-left:5%" alt="">
+      </div>
+        <!-- <h2 style ="font-family:'Darker Grotesque';color:black;font-size:29px;font-weight:bold;letter-spacing:1px;margin-left:10%" *ngIf="authService.isAuthenticated() && !isAdmin()" class="name">Welcome, {{getUserName()}}</h2>
+        <h2 style ="font-family:'Darker Grotesque';color:black;font-size:29px;font-weight:bold;letter-spacing:1px;margin-left:10%" *ngIf="isAdmin()" class="name">Welcome, Restaurant Admin</h2> -->
+        <div class="profile-welcome-container">
+          <div *ngIf="authService.isAuthenticated() && !isAdmin() && !isSuperAdmin()" class="profile-img">
+            <img style="width: 70px; height: 70px; border-radius: 50%; margin-left: 25px; object-fit: cover;" [src]="getImageSrc()" alt="Profile Image" class="img-fluid rounded">
+          </div>
+          <div class="welcome-text">
+            <h2 style="font-family:'Darker Grotesque'; color: black; font-size: 29px; font-weight: bold; letter-spacing: 1px;" *ngIf="authService.isAuthenticated() && !isAdmin() && !isSuperAdmin()" class="name">Welcome, {{ userDetails?.name  }}</h2>
+            <h2 style="margin-top:30px; font-family:'Darker Grotesque'; color: black; font-size: 29px; font-weight: bold; letter-spacing: 1px;" *ngIf="authService.isAuthenticated() && isAdmin() && !isSuperAdmin()" class="name">Welcome, Restaurant Admin</h2>
+            <h2 style="margin-left:20px; margin-top:30px; font-family:'Darker Grotesque'; color: black; font-size: 29px; font-weight: bold; letter-spacing: 1px;" *ngIf="authService.isAuthenticated() && !isAdmin() && isSuperAdmin()" class="name">Welcome, Admin</h2>
+          </div>
+        </div>
+
+        <div class="button-container" style="margin-top:-190px">
+          <div style="font-family:'Catamaran', sans-serif;color:black" class="buttons">
+            <button *ngIf="isSuperAdmin()" style="font-family:'Catamaran', sans-serif;color:black;font-size:19px;font-weight:bold;letter-spacing:1px" routerLink="/super-admin">Accounts</button>
+              <button style="font-family:'Catamaran', sans-serif;color:black;font-size:19px;font-weight:bold;letter-spacing:1px" routerLink="/home">Home</button>
+              <!-- <button routerLink="/login">Login</button> -->
+              <button style="font-family:'Catamaran', sans-serif;color:black;font-size:19px;font-weight:bold;letter-spacing:1px" *ngIf="!authService.isAuthenticated()" routerLink="/login">Login</button>
+              <button style="font-family:'Catamaran', sans-serif;color:black;font-size:19px;font-weight:bold;letter-spacing:1px" (click)="logout()" *ngIf="authService.isAuthenticated()" routerLink="">Logout</button>
+              <button style="font-family:'Catamaran', sans-serif;color:black;font-size:19px;font-weight:bold;letter-spacing:1px"*ngIf="!authService.isAuthenticated()" routerLink="/signup">Sign Up</button>
+              <button style="font-family:'Catamaran', sans-serif;color:black;font-size:19px;font-weight:bold;letter-spacing:1px;" routerLink="user-detail"
+              *ngIf="authService.isAuthenticated() && !isAdmin()" mat-raised-button><mat-icon>person</mat-icon>User Profile</button>
+          </div>      
+      </div>
+      </div>
+      <div  style="font-family:'Darker Grotesque';color:black;font-size:13px;font-weight:bolder;letter-spacing:1px;margin-left:5%" class="taglines">
+        <p *ngIf="currentTaglineIndex === 0">{{ taglines[0] }}</p>
+        <p *ngIf="currentTaglineIndex === 1">{{ taglines[1] }}</p>
+        <p *ngIf="currentTaglineIndex === 2">{{ taglines[2] }}</p>
+        <p *ngIf="currentTaglineIndex === 3">{{ taglines[3] }}</p>
+        <p *ngIf="currentTaglineIndex === 4">{{ taglines[4] }}</p>
+        <p *ngIf="currentTaglineIndex === 5">{{ taglines[5] }}</p>
+        <p *ngIf="currentTaglineIndex === 6">{{ taglines[6] }}</p>
+        <p *ngIf="currentTaglineIndex === 7">{{ taglines[7] }}</p>
+        <p *ngIf="currentTaglineIndex === 8">{{ taglines[8] }}</p>
+        <p *ngIf="currentTaglineIndex === 9">{{ taglines[9] }}</p>
+        <p *ngIf="currentTaglineIndex === 10">{{ taglines[10] }}</p>
+      </div>
+      <p id="line">Order food from favourite restaurants near you.</p>
+      <div class="location-selector">
+        <mat-form-field style="margin-left:5%;color:#F8F5EC">
+          <mat-label style="color:black;font-weight:bold;background-color:#f1f0ea"><mat-icon style="color:rgb(253, 109, 66);font-size:15px; margin-top: 6px;margin-right:2px">location_on</mat-icon>Enable Location</mat-label>
+          <mat-select [(ngModel)]="selectedLocation">
+            <mat-option *ngFor="let location of locations" [value]="location.placeName">
+              {{ location.placeName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        
+        <button class="hw" style="font-family:'Darker Grotesque';font-size:16px;font-weight:bold;" mat-raised-button (click)="findFood()">Find Food</button>
+      </div>
+    </div>
+  </div>
+
+<div class="container">
+    <div class="content-container">
+      <h2 class="title"style="font-family:'Darker Grotesque';font-size:36px;font-weight:bold">Freedom from Minimums</h2>
+      <p class="description" style="font-family:'Darker Grotesque';font-size:22px;font-weight:bold">
+        No restrictions, just satisfaction! Enjoy the flexibility of our food ordering app – 
+        there's no minimum order requirement. Indulge in your cravings without any constraints.
+      </p>
+    </div>
+    <div class="image-container">
+      <img src="../../assets//landing/no-min.gif" alt="Food Image" class="rounded-image">
+    </div>
+</div>
+
+<div class="custom-container">
+  <div class="custom-image-container">
+    <img src="../../assets//landing/fav.webp" alt="Food Image" class="custom-rounded-image">
+  </div>
+  <div class="custom-content-container">
+    <h2 class="cus-title"style="font-family:'Darker Grotesque';font-size:36px;font-weight:bold">Personalized Palate Pleasures</h2>
+    <p class="cus-description"style="font-family:'Darker Grotesque';font-size:22px;font-weight:bold">
+      Tailor your taste experience! With our food ordering app, you can add your favorite restaurants and cuisines to your profile, ensuring a personalized palate adventure every time you order.
+    </p>
+  </div>
+</div>
+
+<div class="cul-container">
+  <div class="content-container">
+    <h2 class="title"style="font-family:'Darker Grotesque';font-size:36px;font-weight:bold">Citywide Culinary Exploration</h2>
+    <p class="description"style="font-family:'Darker Grotesque';font-size:22px;font-weight:bold">
+      Discover diverse flavors at your fingertips! Our food ordering app lets you explore restaurants based on cities,
+       unlocking a world of culinary delights right in your own cityscape.
+    </p>
+  </div>
+  <div class="image-container">
+    <img src="../../assets/landing/cities.jfif" alt="Food Image" class="rounded-image">
+  </div>
+</div>
+
+<div class="custom-container">
+  <div class="custom-image-container">
+    <img src="../../assets/landing/payment.gif" alt="Food Image" class="custom-rounded-image">
+  </div>
+  <div class="custom-content-container">
+    <h2 class="cus-title"style="font-family:'Darker Grotesque';font-size:36px;font-weight:bold">Swift Bites, Swifter Payments</h2>
+    <p class="cus-description"style="font-family:'Darker Grotesque';font-size:22px;font-weight:bold">
+      Savor the speed! Our food ordering app ensures lightning-fast payments, 
+      so you can enjoy your favorite meals without any delay. Tap, pay, and relish the convenience.</p>
+  </div>
+</div>
+
+<div class="ph-container">
+  <div class="ph-left-content">
+    <h2 id="ph-h2"style="font-family:'Darker Grotesque';font-size:36px;font-weight:bold">Restaurants in your pocket</h2>
+    <p id="ph-p" style="font-family:'Darker Grotesque';font-size:22px;font-weight:bold">Order from your favorite restaurants & track on the go, with the all-new FoodiesHub app.</p>
+    <div class="store-images">
+      <img src="../../assets/landing/googleplay.webp" alt="Google Play">
+      <img src="../../assets/landing/apple.png" alt="Apple App Store">
+    </div>
+  </div>
+  <div class="ph-right-content">
+    <img id="ph-img" src="../../assets/landing/phone.jpg" alt="Image">
+  </div>
+</div>
+
+<app-footer></app-footer>
+<!-- <router-outlet></router-outlet> -->
+
+
+
+  

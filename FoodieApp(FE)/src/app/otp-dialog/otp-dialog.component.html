@@ -1,0 +1,11 @@
+<div class="otp-dialog-container">
+  <h2>To verify your email we have sent an OTP</h2>
+    <h3>Please Enter 6 digit OTP</h3>
+
+    <form (ngSubmit)="onSubmit()">
+      <div class="otp-input-container">
+        <input matInput type="text" [(ngModel)]="otp" name="otp" maxlength="6" placeholder="Enter OTP" required>
+      </div>
+      <button type="submit"  class="otp-submit-button">Submit OTP</button>
+    </form>
+</div>

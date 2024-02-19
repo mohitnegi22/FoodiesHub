@@ -1,0 +1,27 @@
+<div class="dialog-box">
+    <h2 mat-dialog-title>Please Provide us Feedback</h2>
+    
+    <mat-dialog-content>
+      <p>Thank you for using our service!</p>
+    </mat-dialog-content>
+    
+    <div class="reaction">
+      <img src="../../assets/crying-face.gif" (click)="onReactionClick('Crying')">
+      <img src="../../assets/sad.gif" (click)="onReactionClick('Sad')">
+      <img src="../../assets/OIP.jpg" (click)="onReactionClick('Neutral')">
+      <img src="../../assets/happy.gif" (click)="onReactionClick('Happy')">
+      <img src="../../assets/redcheek.webp" (click)="onReactionClick('Satisfied')">
+    
+    </div>
+    <div class="text-area">
+      <mat-form-field appearance="fill">
+        <mat-label>Suggestions</mat-label>
+        <textarea matInput matTextareaAutosize [(ngModel)]="feedback.suggestion" ></textarea>
+      </mat-form-field>
+    </div>
+    <mat-dialog-actions>
+      <button  (click)="submitFeedback()" class="button1">Submit</button>
+      <button  (click)="closeDialog()" class="button2"><mat-icon>close</mat-icon></button>
+    </mat-dialog-actions>
+    
+    </div>

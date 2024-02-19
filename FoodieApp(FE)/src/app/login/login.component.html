@@ -1,0 +1,44 @@
+<mat-card class="login-card">
+    
+  <mat-card-content class="mat-card-content">
+    <h2 style="font-family: 'Darker Grotesque', sans-serif; font-weight: bold; font-size: 31px;">Please Login To Continue</h2>
+    <form  (ngSubmit)="login(loginForm)" #loginForm="ngForm">
+        <img routerLink="/home" style="margin-top:-115px;margin-left:27%" src="../../assets/landing3.png" height="160px" width="170px" alt="">
+      <div style="margin-top:-37px;"class="full-width">
+        <label style="margin-top:-68px;font-family: 'Darker Grotesque';font-size:23px;color:black;font-weight:bold" for="email">Email ID:</label>
+        <div class="input-with-icon">
+          <i style="margin-top:5px;color:black" class="fa-solid fa-envelope"></i>
+          <input style="margin-top:9px;height:30px;border-radius:8px;border:2px solid black;width:90%" type="email" id="email" name="email" #email="ngModel" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}" placeholder="Email ID" required [(ngModel)]="credential.emailId">
+        </div>
+        <div class="error" *ngIf="email?.touched && email?.errors?.['required']">Email is required</div>
+        <div class="error" *ngIf="email?.errors?.['pattern']">Enter valid email address</div>
+      </div>
+      
+
+       <div class="full-width">
+        <label style="font-family: 'Darker Grotesque';font-size:23px;color:black;font-weight:bold" for="password">Password:</label>
+        <div class="input-with-icon">
+          <i style="color:black;margin-top:5px" class="fa fa-key" aria-hidden="true"></i>
+          <input style="margin-top:9px;height:30px;border-radius:8px;border:2px solid black ;width:90%" type="password" id="password" name="password" #password="ngModel" placeholder="Password" required [(ngModel)]="credential.password">
+          <span style="margin-left:0" class="password-toggle" (click)="togglePasswordVisibility()"><i style="margin-left:90%;margin-top:5px;color:black"class="fa-solid fa-eye"></i></span>
+        </div>
+        <div class="error" *ngIf="password?.touched && password?.errors?.['required']">Password is required</div>
+       </div>
+
+      <button type="submit" [disabled]="loginForm.invalid" style="height:30px;width:70px;margin:auto;border-radius:8px;border:1px transparent ;padding:auto;font-size:16px;font-weight:bold">Login</button>
+
+      <div class="forgot-password">
+        <span style="font-size: 14px;font-weight:bold; cursor: pointer;" (click)="navigate()" mat-raised-button>Forgot Password?</span>
+      </div>
+
+      <div style="margin-top:-15px" >
+        <p style="font-weight:bold">Don't Have Account??
+          <span class="signup" style="cursor: pointer; text-decoration: underline;" (click)="navigateToSignup()">Sign Up</span>
+        </p>
+      </div>
+
+    </form>
+    
+  </mat-card-content>
+
+</mat-card>

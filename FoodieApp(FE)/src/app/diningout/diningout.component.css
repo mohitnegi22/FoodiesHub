@@ -1,0 +1,7 @@
+.card-container{
+    overflow-x: auto; 
+    white-space: nowrap; 
+}
+.card-container::-webkit-scrollbar{
+    display: none;
+  }

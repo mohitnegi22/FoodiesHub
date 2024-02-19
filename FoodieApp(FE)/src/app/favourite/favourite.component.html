@@ -1,0 +1,31 @@
+<div style="background-color:aqua;margin-top:-100px; background: linear-gradient(to right, #e9f798, #c3f8d9);padding-top:20px; padding-bottom:10px;">
+  <button mat-icon-button style="position: fixed; top: 10px; right: 10px; color: white; background-color: #ec5555;" routerLink="/home" matTooltip="Back to Home">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+<div style =height:30%></div>
+  <div  class="favorite-restaurants-container">
+  <h1 style="font-family:darker grotesque;font-weight:bold" class="page-title">Your <span style="color:red; font-size:30px;">Favourite</span> Restaurants</h1>
+  <p style="color:black;font-family:darker grotesque;font-size:20px" class="page-subtitle">Discover the delights you love</p>
+
+  <div *ngFor="let restaurant of favoriteRestaurants" class="restaurant-card" (click)="navigateToRestaurantDetails(restaurant._id)">
+    <div class="restaurant-photo">
+      <img [src]="restaurant.images" alt="Restaurant Photo">
+    </div>
+
+    <div class="restaurant-details">
+      <h2 style="font-family:darker grotesque;font-size:26px;font-weight:bold">{{ restaurant.name }}</h2>
+      <p class="cuisine">{{ restaurant.cuisine.join(', ') }}</p>
+      <!-- <p class="rating">⭐{{ restaurant.rating }}</p> -->
+      <p style="margin-top: -15px; margin-left: 7px; font-family: 'Darker Grotesque'; font-size: 20px; font-weight: bold; margin-left: -1px; margin-top: -5px;">
+        <mat-icon [ngStyle]="{'color': getRatingColor(restaurant.rating)}" style="vertical-align: middle;font-size:19px">star</mat-icon>
+        <span style="margin-top:-3px">{{ restaurant.rating }}</span>
+      </p>
+    </div>
+
+    <button style="background-color:rgb(209, 248, 191)" mat-fab class="favorite-button" matTooltip="Remove from Favorites" (click)="removeFromFavorites($event, restaurant._id)" matTooltip="Remove from Favorites">
+      <mat-icon style="font-size: 20px; margin-top:5px;color:rgb(255, 66, 75);">delete</mat-icon>
+    </button>
+  </div>
+</div>
+</div>
+

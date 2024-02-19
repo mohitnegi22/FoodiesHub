@@ -1,0 +1,14 @@
+<div id="displayer" style="width: 78%; margin: 0 auto; margin-top: 30px; margin-bottom:30px;">
+    <p style="font-family: 'Darker Grotesque';font-size:40px;font-weight:bold">Nightlife</p>
+    <p style="font-family: 'Darker Grotesque', sans-serif;font-size:23px;color:black;margin-top:29px">Explore curated lists of top restaurants, cafes, pubs, and bars in Delhi NCR, based on trends</p>
+    <div style="display: flex; overflow-x: auto;">
+        <div class="card-container" style="display: inline-block;">
+            <div class="images" *ngFor="let img of images" style="display:inline-block;width: 280px; height: 310px; margin-right: 18px;">
+                <img [src]="img" alt="Image" style="width: 100%; height: 100%;border-radius:3%">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<app-footer></app-footer>

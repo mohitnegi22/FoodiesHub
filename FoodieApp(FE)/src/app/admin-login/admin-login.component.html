@@ -1,0 +1,29 @@
+<div class="outer">
+  <div style= height:10%></div>
+  
+  <div style="margin-top:40px;font-family:darker grotesque;font-size:21px;" class="login-container">
+    <h1 style="font-family:darker grotesque;font-size:30px;font-weight:bold">Welcome Restaurant Owners!!😊</h1>
+    <h2 style="font-family:darker grotesque;font-size:24px;font-weight:bold">Please Login To View Orders Page</h2>
+    <mat-icon>lock</mat-icon>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="restaurantId">Restaurant ID:</label>
+        <input type="text" id="id" formControlName="id" />
+        <div class="error" *ngIf="loginForm.get('id')?.touched && loginForm.get('id')?.errors?.['required']">Id is required</div>
+      </div>
+    
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <div class="password-container">
+        <input type="password" id="password" formControlName="password" [type]="hidePassword ? 'password' : 'text'"/>
+        <span style="margin-left:0" class="password-toggle" (click)="togglePasswordVisibility()"><i style="margin-left:90%;margin-top:5px;color:black"class="fa-solid fa-eye"></i></span>
+        </div>
+        <div class="error" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.errors?.['required']">Password is required</div>
+      </div>
+    
+      <button type="submit" [disabled]="loginForm.invalid">Login</button>
+    </form>
+    <p class="para" style="margin-top:25px;margin-left:-190px;font-size:19px;font-weight:bold"  (click)="navigateToHomepage()">Continue To Homepage</p>
+  </div>
+  
+  </div>

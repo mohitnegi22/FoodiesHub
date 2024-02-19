@@ -1,0 +1,89 @@
+.image:hover {
+    transform: scale(1.05); 
+  }
+
+  .info:hover {
+    transform: scale(1.01); 
+  }
+
+  /* Add this to your component's CSS or global styles */
+.add-to-cart-button {
+  font-family: 'Darker Grotesque';
+  font-size: 16px;
+  font-weight: bold;
+  color: green;
+  border-radius: 6px;
+  background-color: rgb(255, 255, 255);
+  padding: 3px;
+  position: absolute;
+  border:none;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: color 0.3s ease; /* Add a transition for a smooth color change */
+}
+
+.add-to-cart-button:hover {
+  color: blue; /* Change the color to your desired hover color */
+}
+.filter-buttons {
+  display: flex;
+  align-items: center;
+  gap:20px;
+  margin-bottom:30px;
+  font-family: cursive;
+}
+
+.reset-button,
+.apply-button {
+  padding: 2px 6px; 
+  padding-bottom:4px;
+  font-size: 17px;
+  cursor: pointer;
+  background-color: #4caf50; 
+  border: none;
+  color: white;
+  border-radius: 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 2px; 
+  transition-duration: 0.4s;
+  cursor: pointer;
+  font-family:"darker grotesque";
+  /* font-weight:bold */
+}
+
+.filter-section {
+  display: flex;
+  align-items: center;
+  font-family: 'darker grotesque';
+  font-size:18px
+}
+
+label {
+  margin-right: 4px; 
+  font-size: 18px;
+  font-weight:bold
+}
+
+select {
+  padding: 6px; 
+  font-size: 14px;
+  border: 1px solid grey;
+  border-radius: 12px;
+}
+
+
+select option:hover {
+  background-color: #ddd;
+}
+
+.apply-button {
+  background-color: #008CBA; 
+}
+
+.reset-button:hover,
+.apply-button:hover {
+  background-color: #45a049; 
+}

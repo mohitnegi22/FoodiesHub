@@ -1,0 +1,14 @@
+<div id="main" style="width: 82%; margin: 0 auto; height: auto; margin-top: -20px; display: flex;">
+    <div *ngFor="let img of images; let i = index" class="headers" style="width: 220px; margin-left:10px;height: 90px; display: flex; align-items: center; border-bottom: 1px solid" 
+      [ngStyle]="{'border-color': selectedImageIndex === i ? img.altColor : 'rgb(165, 165, 165)', 'color': selectedImageIndex === i ? img.altColor : 'rgb(126, 124, 124)'}" 
+      (click)="onSelect(i)">
+      <div class="round" style="margin-left:10px; border-radius: 50%; height: 75px; width: 75px; display:flex; justify-content:center; align-items: center;"
+        [ngStyle]="{'background-color': selectedImageIndex === i ? 'rgb(255 236 201)' : 'aliceblue'}">
+        <img *ngIf="selectedImageIndex !== i" [src]="img.src" width="50%" [alt]="img.alt">
+        <img *ngIf="selectedImageIndex === i" [src]="alternateImages[i]" width="50%" alt="Alternate Image">
+      </div>
+  
+      <p style="margin-left: 5px; letter-spacing: 1px; font-family: 'Darker Grotesque', sans-serif; margin-left: 10px; font-size: 24px; font-weight: bold;">{{img.alt}}</p>
+    </div>
+  </div>
+

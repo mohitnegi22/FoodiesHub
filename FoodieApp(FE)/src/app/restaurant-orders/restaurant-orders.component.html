@@ -1,0 +1,95 @@
+<div class="container">
+  <!-- <button mat-raised-button color="primary" (click)="navigateToDishes()">Go to Dishes</button> -->
+  <!-- <button class="logout" (click)="logout()" *ngIf="authService.isAuthenticated()">Logout</button> -->
+  <h1 style="font-family:darker grotesque;font-weight:bold">Welcome Admin to Orders page of <span style="color:brown">{{restaurantDetails.name}}</span></h1>
+  <div style="display: flex; gap:15px; justify-content: center;">
+    <h4 style="font-weight:bold">State - <span style="color:rgb(245, 91, 91)">{{restaurantDetails.state}}</span></h4>
+    <h4 style="font-weight:bold">City - <span style="color:rgb(245, 91, 91)">{{restaurantDetails.city}}</span></h4>
+  </div>    
+
+  <div class="ic" style="margin-right: 15px;display:flex;flex-direction:column;text-align:center;align-items:center;">
+    <mat-icon style="color:black; cursor:pointer;" routerLink="/home">home</mat-icon>
+    <span routerLink="/home" style="cursor: pointer; margin-left: 5px;font-family:darker grotesque;font-size:18px;font-weight:bold;color:black;">Home</span>
+</div>
+
+</div>
+
+<div *ngIf="restaurantOrders && restaurantOrders.length > 0" class="orders-container">
+  <h2 style=" font-family: 'Darker Grotesque'; font-weight: 600;">{{restaurantDetails.name}} Restaurant Orders</h2>
+  <div *ngFor="let order of restaurantOrders" style="border-radius:15px" class="order-card">
+    <div class="order-details">
+      <div class="order-info">
+        <p style="font-size:20px;font-family:darker grotesque;font-weight:bold" class="heading">Order Id:</p>
+        <p style="font-size:18px;font-family:darker grotesque;font-weight:bold"class="value">{{ order.id }}</p>
+      </div>
+      <div class="order-info">
+        <p style="font-size:20px;font-family:darker grotesque;font-weight:bold" class="heading">Email:</p>
+        <p style="font-size:18px;font-family:darker grotesque;font-weight:bold" class="value">{{ order.emailId }}</p>
+      </div>
+    </div>
+    
+    <div class="items-list">
+      <div *ngFor="let item of order.items" class="item">
+        <img style="height:80px;width:80px;border-radius:50%" src="{{ item.image }}" alt="{{ item.name }}" class="item-image">
+        <div class="item-details">
+          <p style="font-family:darker grotesque;font-weight:bold;font-size:18px" class="item-name">{{ item.name }}</p>
+          <p style="font-family:darker grotesque;font-weight:bold;font-size:16px" class="item-quantity">{{ item.quantity }}</p>
+          <p style="font-family:darker grotesque;font-weight:bold;font-size:16px"class="item-price">{{ item.price | currency: 'INR' }}</p>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+  
+    <div class="order-summary">
+      <p style="font-weight:bold;font-family:darker grotesque;font-size:17px ">Order Summary</p>
+      <div class="summary-text">
+        <p  style="font-weight:bold;font-family:darker grotesque;font-size:19px " class="paid-heading">Amount Paid:</p>
+        <p  style="font-weight:bold;font-family:darker grotesque;font-size:19px "class="total-amount">{{ order.totalAmount | currency: 'INR' }}</p>
+      </div>
+      <div class="status-container">
+        <p  style="font-weight:bold;font-family:darker grotesque;font-size:19px " class="status-heading">Status:</p>
+        <button class="status"
+          [disabled]="order.status === 'Delivered'" 
+          (click)="processOrder(order.id)"
+          [ngClass]="{
+            'btn-blue': order.status === 'Ordered',
+            'btn-green': order.status === 'Delivered'
+          }"
+        >
+          {{ order.status === 'Delivered' ? 'Processed' : 'Process Order' }}
+        </button>
+      </div>
+    </div>
+
+   <p><span  style="font-weight:bold;font-family:darker grotesque;font-size:19px " class="paid-heading">Delivery Address:</span> 
+    <span style="font-size:19px;font-family: 'Darker Grotesque'; margin-left:5px; font-weight: bold;">{{order.fullAddress}}, {{order.city}}, {{order.state}}, {{order.zipCode}}.</span>
+  </p>
+
+
+<button  style="font-weight:bold;font-family:darker grotesque;font-size:17px ;color:black" class="toggle-feedback-btn" (click)="toggleFeedback(order)">
+  {{ order.showFeedback ? 'Hide Feedback' : 'Show Feedback' }}
+</button>
+
+<div *ngIf="order.showFeedback" class="feedback-container">
+  <div class="order-infof">
+    <div class="feedback-face" [ngClass]="{
+      'happy': order.feedback[0]?.reaction === 'Happy',
+      'sad': order.feedback[0]?.reaction === 'Sad',
+      'cheeky': order.feedback[0]?.reaction === 'Satisfied',
+      'neutral': order.feedback[0]?.reaction === 'Neutral',
+      'crying': order.feedback[0]?.reaction === 'Crying'
+    }"></div>
+    <div class="feedback-details">
+      <p  style="font-weight:bold;font-family:darker grotesque;font-size:17px " class="headingf">Suggestions:</p>
+      <p class="valuef">{{ order.feedback[0]?.suggestion }}</p>
+    </div>
+  </div>
+</div>
+
+  </div>
+</div>
+
+<div *ngIf="!restaurantOrders || restaurantOrders.length === 0" class="no-orders">
+  <p>No orders available for this restaurant.</p>
+</div>

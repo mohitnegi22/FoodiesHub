@@ -1,0 +1,59 @@
+
+<div style="background-color:aqua;margin-top:-100px; background: linear-gradient(to right, #e9f798, #c3f8d9); padding-bottom:30px;">
+  <div class="order-history-container">
+    <h2 style="padding-top:15px;font-size:30px;font-family:darker grotesque;font-weight:bold" class="page-heading">Order History</h2>
+    <button mat-icon-button style="position: fixed; top: 10px; right: 10px; color: white; background-color: #0f3127;" routerLink="/user-detail" matTooltip="Back to User-Details">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div *ngIf="orderHistory && orderHistory.length > 0">
+      <div *ngFor="let order of orderHistory" style="border-radius:15px" class="order-item">
+        <div class="order-details">
+          <div class="order-info" >
+            <p style="font-family:darker grotesque;font-size:18px;font-weight:bold;color:black;color:black" class="heading">Order ID:</p>
+            <p  style="font-family:darker grotesque;font-size:20px;font-weight:bold;color:rgb(70, 18, 63)" class="value">{{ order.id }}</p>
+          </div>
+          <div class="order-info">
+            <p  style="font-family:darker grotesque;font-size:18px;font-weight:bold" class="heading">Restaurant Name:</p>
+            <p  style="font-family:darker grotesque;font-size:20px;font-weight:bold;color:rgb(70, 18, 63)" class="value">{{ order.restaurantName }}</p>
+          </div>
+        </div>
+  
+        <div class="items-list">
+          <p style="font-family:darker grotesque;font-size:18px;font-weight:bold;color:black" class="heading">Items:</p>
+          <div class="item-container">
+            <div *ngFor="let item of order.items" class="item">
+              <img height="50px" width="50px" src="{{ item.image }}" alt="{{ item.name }}" class="item-image-history">
+              <div class="item-details">
+                <p style="font-family:darker grotesque;font-size:19px;font-weight:bold;color:black" class="item-name">{{ item.name }}</p>
+                <p style="font-family:darker grotesque;font-size:15px;font-weight:bold;color:black"class="item-quantity">{{ item.quantity }} x</p>
+                <p style="font-family:darker grotesque;font-size:15px;font-weight:bold;color:black" class="item-price">{{ item.price | currency: 'INR' }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <hr class="divider-line">
+  
+        <div class="order-summary">
+          <div style="font-family:darker grotesque;font-size:23px;font-weight:bold;color:black" class="summary-text">
+            <p style="font-family:darker grotesque;font-size:23px;font-weight:bold;color:black" class="heading">Total Amount:</p>
+            <p class="value">{{ order.totalAmount | currency: 'INR' }}</p>
+          </div>
+          <div class="status-container">
+            <p style="font-family:darker grotesque;font-size:18px;font-weight:bold;color:black" class="heading">Status:</p>
+            <p style="font-family:darker grotesque;font-size:23px;font-weight:bold;" class="value" [ngClass]="{
+              'status-ordered': order.status === 'Ordered',
+              'status-delivered': order.status === 'Delivered'
+            }">
+              {{ order.status }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div *ngIf="!orderHistory || orderHistory.length === 0">
+      <p class="no-orders">No order history available for this user.</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,147 @@
+
+<div class="main" style="height: 115vh; width: 1360px; margin-top: -40px; margin-left: -290px; background: linear-gradient(to right, #ffe0e6, #ecddf5);">
+<h1 style="margin-top:20px;margin-left:28%;color:rgb(0, 0, 0);font-family:darker grotesque;font-weight:bold;font-size:30px"><span>Welcome, {{userDetails?.name}} </span>to Profile Details Page of FoodiesHub !!!</h1>
+<div  style="margin-top:20px;display:flex" class="container" >
+  
+  <div class="favorite-restaurants" style="background-color:rgb(243, 246, 248);height:89vh;margin-left:20%;width:24%">
+    <h2>Favourite Restaurants</h2>
+    <ul>
+      <li *ngFor="let restaurant of favoriteRestaurants">
+        <span style="color: rgb(252, 60, 60);font-weight:bold;font-family:darker grotesque;font-size:17px">{{ restaurant.name }}</span>
+        <span style="color: black;font-weight:bold;font-family:darker grotesque;font-size:17px"class="restaurant-city">{{ restaurant.city }}</span>
+      </li>
+    </ul>
+  </div>
+
+<div class="mat-card emp-profile" style="background-color:rgb(243, 246, 248);border-radius:15%;width:35%;height:79vh;border-radius:5%;">
+  <form>
+    <div class="mat-card-content" style="background-color:rgb(243, 246, 248);">
+      <div class="profile-container" style="background-color:rgb(243, 246, 248)">
+        <div  class="profile-img">
+          <img style="width:185px;height:120px;margin-left:25px" [src]="getImageSrc()" alt="Profile Image" class="img-fluid rounded">
+        </div>
+        <div class="profile-details" style="margin-top:-20px">
+          <div style="margin-left:15px" class="mat-card-title">
+            <h5 style="font-size:27px; font-weight:bold;font-family:'Darker Grotesque';">{{userDetails?.name}}  </h5>
+            <h6 style="font-size: large; color: grey; font-weight:bold; font-family:'Darker Grotesque';">Food Enthusiast</h6>
+          </div>
+          <div class="ic" style="margin-left: 150px;margin-top:-60px;display:flex;flex-direction:column;text-align:center;align-items:center;">
+            <mat-icon routerLink="/order-history" style="color:rgb(39, 60, 92)" >history</mat-icon>
+  
+            <span style="margin-left: 5px;font-family:darker grotesque;font-size:18px;font-weight:bold;color:rgb(39, 60, 92)" routerLink="/order-history">Order History</span>
+        </div>
+          
+          <div style="margin-top:8px;margin-left:5px" class="edit-photo" >
+            
+            <button style="padding:auto;display:flex ;color:#ff3131;font-size:18px;font-weight:bold;font-family:darker grotesque" class="edit-button" *ngIf="editMode" (click)="openFilePicker()">
+              <mat-icon>edit</mat-icon><span style="margin-top:1px" > Edit Photo</span>
+            </button>
+          </div>
+        </div>
+      </div>
+        
+        <mat-tab-group>
+          <mat-tab style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;" label="About">
+            <div class="user-details">
+              <form [formGroup]="userForm" (ngSubmit)="saveChanges()">
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input matInput type="email" formControlName="emailId" required name="email" readonly />
+                </div>
+                
+                <div class="form-group">
+                  <label for="name">Name</label>
+                  <input matInput type="text" formControlName="name" name="name" #name [readonly]="!editMode" />
+                  <div class="error" *ngIf="userForm.get('name').hasError('required') && userForm.get('name').touched">
+                    Name is required.
+                  </div>
+                  <div class="error" *ngIf="userForm.get('name').hasError('minlength') && userForm.get('name')">
+                    Name must be at least 4 characters long.
+                  </div>
+                </div>
+                
+                <div class="form-group">
+                  <label for="mobileNumber">Mobile Number</label>
+                  <input matInput type="tel" name="mobileNumber" formControlName="mobileNumber" [readonly]="!editMode" />
+                  <div class="error" *ngIf="userForm.get('mobileNumber').hasError('required') && userForm.get('mobileNumber').touched">
+                    Mobile Number is required.
+                  </div>
+                  <div class="error" *ngIf="userForm.get('mobileNumber').hasError('pattern') && userForm.get('mobileNumber')">
+                    Invalid Mobile Number. It should start with 7, 8, or 9 and be 10 digits long.
+                  </div>
+                </div>
+                
+                <div class="form-group">
+                  <label for="fullAddress">Full Address</label>
+                  <input matInput type="text" name="fullAddress" formControlName="fullAddress" [readonly]="!editMode" />
+                  <div class="error" *ngIf="userForm.get('fullAddress').hasError('required') && userForm.get('fullAddress').touched">
+                    Full Address is required.
+                  </div>
+                  <div class="error" *ngIf="userForm.get('fullAddress').hasError('maxlength') && userForm.get('fullAddress')">
+                    Full Address must not exceed 200 characters.
+                  </div>
+                </div>
+                
+                <div class="row">
+                  <div class="form-group">
+                    <label for="city">City</label>
+                    <input matInput type="text" name="city" formControlName="city" [readonly]="!editMode" />
+                    <div class="error" *ngIf="userForm.get('city').hasError('required') && userForm.get('city').touched">
+                      City is required.
+                    </div>
+                    <div class="error" *ngIf="userForm.get('city').hasError('maxlength') && userForm.get('city')">
+                      City must not exceed 30 characters.
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="state">State</label>
+                    <input matInput type="text" name="state" formControlName="state" [readonly]="!editMode" />
+                    <div class="error" *ngIf="userForm.get('state').hasError('required') && userForm.get('state').touched">
+                      State is required.
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="zipCode">Zip Code</label>
+                    <input matInput type="text" name="zipCode" formControlName="zipCode" [readonly]="!editMode" />
+                    <div class="error" *ngIf="userForm.get('zipCode').hasError('required') && userForm.get('zipCode').touched">
+                      Zip Code is required.
+                    </div>
+                    <div class="error" *ngIf="userForm.get('zipCode').hasError('pattern') && userForm.get('zipCode')">
+                      Invalid Zip Code. It should be a 5-digit code.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="image-upload-container">
+                    <input type="file" id="profileImageInput" (change)="onFileSelected($event)" accept="image/*" style="display: none;" />
+                    <button type="button" class="edit-button" style="margin-bottom:30px;color:black;font-size:18px;font-weight:bold;font-family:darker grotesque" color="primary" *ngIf="editMode" (click)="uploadProfileImage()">
+                      Upload Image
+                    </button>
+                  </div>
+                </div>
+
+
+                <button mat-raised-button style="background-color: #910364; color:white; height:35px;" *ngIf="!editMode" (click)="toggleEditMode()">
+                  <mat-icon>edit</mat-icon> Edit
+                </button>
+                <button mat-raised-button style="background-color: #910364; color:white; height:35px;" *ngIf="editMode">
+                  Save
+                </button>
+              </form>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+ 
+    </div>
+  </form>
+</div>
+<!-- Inside the main container div -->
+<button mat-icon-button style="position: fixed; top: 10px; right: 10px; color: white; background-color: #250e1e;" routerLink="/home" matTooltip="Back to Home">
+  <mat-icon>arrow_back</mat-icon>
+</button>
+
+</div>
+</div>

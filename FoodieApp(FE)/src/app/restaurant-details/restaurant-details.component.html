@@ -1,0 +1,144 @@
+<app-header [showSearch]="false"></app-header>
+<div style="width: 78%; margin: 0 auto; margin-top: 65px; margin-bottom:30px; " *ngIf="restaurant">
+    
+    <div style="display: flex">
+      <p>
+        <img
+          src="{{ restaurant.images }}"
+          height="400px"
+          width="500px"
+          style="border-radius: 12px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);"
+          alt=""
+        />
+      </p>
+      <div style="margin-left: 20px; display: flex;color:rgb(77, 73, 73); flex-direction: column; font-family: 'Darker Grotesque', sans-serif; font-size: 24px; font-weight: bold">
+        <h2  style="color:rgb(0, 0, 0);font-family: 'Darker Grotesque', sans-serif; font-size: 34px; font-weight: bolder; ">{{ restaurant.name }}</h2>
+        <div style="display:flex;margin-top:7px;font-size:22px;font-weight:500px;color:rgb(77, 73, 73)">
+          <mat-icon style="color: rgb(255, 3, 3); margin-right: 8px">location_on</mat-icon>
+          {{ restaurant.address }}, {{ restaurant.city }}, {{ restaurant.state }}
+        </div>
+        <div style="display:flex;margin-top:10px;font-size:21px;color:rgb(77, 73, 73)">
+          <mat-icon style="color:rgb(77, 73, 73); margin-right: 8px; margin-left: 4px">phone</mat-icon>
+          {{ restaurant.contact.phone }}
+          <mat-icon style="color:rgb(77, 73, 73); margin-right: 8px; margin-left: 18px">email</mat-icon>
+          {{ restaurant.contact.email }}
+        </div>
+  
+        <div style="margin-top:10px;color:black">🍽️Cuisines: <span style="font-size:20px;font-weight:500px;color:black">{{ restaurant.cuisine.join(', ') }}</span></div>
+  
+        <div style="color:black;margin-top:10px;font-size:20px;font-weight:500px" *ngIf="restaurant.payment_methods && restaurant.payment_methods.length > 0">
+          Payment Methods: {{ restaurant.payment_methods.join(', ') }}
+        </div>
+  
+        <div style="color:black;margin-top:10px;font-size:20px;font-weight:500px" *ngIf="restaurant.health_safety">
+          Health and Safety:
+          <ol type="1">
+            <li style="margin-top:10px" *ngIf="restaurant.health_safety.compliance">Compliance</li>
+            <li style="margin-top:10px" *ngIf="restaurant.health_safety.covid_measures">{{ restaurant.health_safety.covid_measures }}</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <h2 style="font-family: 'Darker Grotesque'; font-size: 25px; font-weight: bolder">Order Food from {{ restaurant.name }}</h2>
+
+    <div style="font-family:darker grotesque;" class="filter-buttons">
+      <button class="reset-button" (click)="resetFilters()">Show All Items</button>
+    
+      <div class="filter-section">
+        <label>Sort By</label>
+        <select [(ngModel)]="selectedSortOption">
+          <option  style="font-family:darker grotesque;font-size:18px;font-weight:bold"  *ngFor="let option of sortOptions" [value]="option.value">{{ option.label }}</option>
+        </select>
+      </div>
+
+      <div class="filter-section">
+        <label>Type Filter</label>
+        <select [(ngModel)]="selectedTypeFilter">
+          <option style="font-family:darker grotesque;font-size:18px;font-weight:bold"  *ngFor="let option of typeFilterOptions" [value]="option.value">{{ option.label }}</option>
+        </select>
+      </div>
+      
+    
+      <div class="filter-section">
+        <label>Rating Filter</label>
+        <select [(ngModel)]="selectedRating">
+          <option style="font-family:darker grotesque;font-size:18px;font-weight:bold" *ngFor="let option of ratingFilterOptions" [value]="option.value">{{ option.label }}</option>
+        </select>
+      </div>
+    
+      <div class="filter-section">
+        <label>Price Filter</label>
+        <select [(ngModel)]="selectedPriceFilter">
+          <option style="font-family:darker grotesque;font-size:18px;font-weight:bold" *ngFor="let option of priceFilterOptions" [value]="option.value">{{ option.label }}</option>
+        </select>
+      </div>
+    
+      <button class="apply-button" (click)="applyFilters()">Apply Filters</button>
+    </div>
+  
+    <div *ngIf="restaurant.menu && restaurant.menu.length > 0; else noRestaurantsFound">
+        <!-- <h2 style="font-family: 'Darker Grotesque'; font-size: 25px; font-weight: bolder">Order Food from {{ restaurant.name }}</h2> -->
+
+
+        <div *ngFor="let menuItem of restaurant.menu; let i = index" class="info" style="transition: all 0.3s ease; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); background-color: rgb(250, 253, 255); display: flex; width: 100%; margin-bottom: 28px; align-items: center; justify-content: space-between; position: relative;">
+      
+      
+          <div style="margin-left: 10px;">
+            <img *ngIf="menuItem.type === 'veg'" src="../../assets/veg.png" alt="Veg Symbol" style="vertical-align: middle; width: 20px; height: 20px;">
+            <img *ngIf="menuItem.type === 'non veg'" src="assets/nonveg.png" alt="Non-Veg Symbol" style="vertical-align: middle; width: 18px; height: 18px;">
+            <p style="top:0;font-family: 'Darker Grotesque', sans-serif;font-weight:bold;font-size:24px;font-weight:bold;">• {{ menuItem.name }}</p>
+            
+            <p style="color:rgb(0, 0, 0);font-family: 'Darker Grotesque';font-size:20px;font-weight:500px">Price: ₹{{ menuItem.price }}</p>
+            <!-- <p style="color:rgb(6, 4, 4);font-family: 'Darker Grotesque';font-size:20px;font-weight:500px">Rating: ⭐{{ menuItem.rating }}</p> -->
+            <p style="color: rgb(6, 4, 4); font-family: 'Darker Grotesque'; font-size: 20px; font-weight: 500px;">
+              Rating:
+              <mat-icon [ngStyle]="{'color': getRatingColor(menuItem.rating)}" style="vertical-align: middle;">star</mat-icon>
+              <span style="vertical-align: middle;">{{ menuItem.rating }}</span>
+            </p>
+          </div>
+      
+      
+          <div style="font-family: 'Darker Grotesque'; color: green;border:none; display: flex; align-items: center; justify-content: space-between; margin-left: auto;">
+            <button style="font-size: 12px; margin-left: 10px; font-weight: bold;" *ngIf="isLoggedIn" (click)="decreaseQuantity(i)">-</button>
+            <span style="font-size: 18px; margin-left: 10px; font-weight: bold;"*ngIf="isLoggedIn">{{ selectedQuantities.get(i) || 0 }}</span>
+            <button style="font-size: 12px; margin-left: 10px; margin-right: 5px; font-weight: bold;" *ngIf="isLoggedIn" (click)="increaseQuantity(i)">+</button>
+</div>
+
+
+      
+      
+          <div style="position: relative;">
+            <button style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);padding:3px; background-color: rgb(255, 255, 255); font-family: 'Darker Grotesque'; font-size: 16px; font-weight: bold; color: green; border-radius: 6px" [disabled]="selectedQuantities.get(i) === 0" *ngIf="isLoggedIn" (click)="addToCart(menuItem, i)">Add to Cart</button>
+            <img src="{{ menuItem.image }}"  height="185px" width="240px" style="object-fit:cover;border-radius: 6px; box-shadow: 0px 2px 4px rgba(92, 92, 92, 0.1);" alt="" />
+          </div>
+      
+        </div>
+      </div>
+      
+      
+      
+  
+    <div style="font-family: 'Darker Grotesque'; font-size: 18px; font-weight: bold; color: rgb(0, 0, 0);" *ngIf="restaurant.reviews && restaurant.reviews.length > 0">
+      <h2 style="font-family: 'Darker Grotesque'; font-size: x-large; font-weight: bold;">Reviews</h2>
+      <ul>
+        <li *ngFor="let review of restaurant.reviews">
+          <p>{{ review.user }} - {{ review.rating }} stars</p>
+          <p>{{ review.comment }}</p>
+        </li>
+      </ul>
+    </div>
+  
+  
+  </div>
+  
+  <div *ngIf="!restaurant">
+    <p>Restaurant details not available.</p>
+  </div>
+  <ng-template #noRestaurantsFound>
+    <div style="margin-top: 20px; text-align: center; font-family: 'Darker Grotesque'; font-size: 22px;font-weight:bold; color: red;">
+      No Restaurants found based on the applied filters.
+    </div>
+  </ng-template>
+
+  <app-footer></app-footer>

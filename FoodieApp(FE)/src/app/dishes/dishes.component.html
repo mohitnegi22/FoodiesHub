@@ -1,0 +1,25 @@
+<div class="container">
+    <h2>Menu for Restaurant {{ restaurantId }}</h2>
+  
+    <div *ngIf="menu && menu.length > 0">
+      <div *ngFor="let dish of menu" class="dish-card">
+        <img [src]="dish.image" alt="{{ dish.name }}" class="dish-image">
+        <div class="dish-details">
+          <p class="dish-name">{{ dish.name }}</p>
+          <p class="dish-price">{{ dish.price | currency: 'INR' }}</p>
+          <p class="dish-rating">Rating: {{ dish.rating }}</p>
+          <p class="dish-type">Type: {{ dish.type }}</p>
+        </div>
+        <div class="dish-actions">
+          <button (click)="addDish()">Add to Order</button>
+          <button (click)="removeDish(dish.id)">Remove from Menu</button>
+          <button (click)="updateDish(dish.id)">Update Dish</button>
+        </div>
+      </div>
+    </div>
+  
+    <div *ngIf="!menu || menu.length === 0" class="no-dishes">
+      <p>No dishes available for this restaurant.</p>
+    </div>
+  </div>
+  
