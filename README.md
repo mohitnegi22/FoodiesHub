@@ -2,7 +2,7 @@
 
 Welcome to our Food Ordering Web App! This application allows users to browse a variety of dishes, place orders, and have their food delivered right to their doorstep.
 
-![App Screenshot](screenshot.png)
+![App Screenshot]([screenshot.png](https://github.com/mohitnegi22/FoodiesHub/blob/main/Screenshot%202024-01-03%20005422.png))
 
 ## Table of Contents
 - [Features](#features)
